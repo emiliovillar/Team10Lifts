@@ -1,5 +1,23 @@
 {
+  "name": "team10lifts",
+  "version": "1.0.0",
+  "private": true,
+  "main": "expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
   "dependencies": {
-    "@supabase/supabase-js": "^2.103.2"
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@supabase/supabase-js": "^2.103.2",
+    "@types/react": "~19.2.10",
+    "expo": "^55.0.15",
+    "expo-sqlite": "~55.0.15",
+    "react": "19.2.0",
+    "react-native": "0.83.4",
+    "react-native-url-polyfill": "^3.0.0",
+    "typescript": "~5.9.2"
   }
 }
