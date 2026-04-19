@@ -130,7 +130,9 @@ Team10Lifts is built around a mobile frontend, a Supabase backend, and an AI sug
 - `EXPO_PUBLIC-SUPABASE_PUBLISHABLE_KEY=your_publishable_key`
 
 4. Start the developement server
-- `npx expo start`
+- `npx expo start --ios`
+- `npx expo start --android`
+- `npx expo start --web`
 
 5. Run Supabase functions locally (optional): If needed for backend development:
 - `supabase start`
