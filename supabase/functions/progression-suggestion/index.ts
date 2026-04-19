@@ -1,8 +1,10 @@
-import { createClient } from 'jsr:@supabase/supabase-js@2';
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createClient } from '@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 
+    'authorization, x-client-info, apikey, content-type',
 };
 
 function getEnv(name: string): string {
@@ -15,7 +17,11 @@ function getEnv(name: string): string {
   return value;
 }
 
-Deno.serve(async (request) => {
+type RequestBody = {
+  workout_id?: string;
+}
+
+Deno.serve(async (request: Request) => {
   if (request.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
@@ -30,7 +36,8 @@ Deno.serve(async (request) => {
       );
     }
 
-    const { workout_id: workoutId } = await request.json();
+    const body = (await request.json()) as RequestBody;
+    const workoutId = body.workout_id;
 
     if (!workoutId || typeof workoutId !== 'string') {
       return Response.json(
@@ -94,7 +101,10 @@ Deno.serve(async (request) => {
   } catch (error) {
     return Response.json(
       {
-        error: error instanceof Error ? error.message : 'Unexpected server error.',
+        error: 
+          error instanceof Error 
+            ? error.message 
+            : 'Unexpected server error.',
       },
       { status: 500, headers: corsHeaders },
     );
