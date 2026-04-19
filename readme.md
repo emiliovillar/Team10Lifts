@@ -9,15 +9,7 @@
 - Solution
 - Core Features
 - System Architecture
-- Security and Data Protection
-- AI Infrastructure
-- Current Implementation Status
-- Project Structure
 - How to Run
-- Roadmap
-- Team Roles
-- Quick Setup Reference
-- Future Work
 
 ---
 
@@ -79,7 +71,7 @@ The system is designed to support the following core features:
 - Workout program support
 - AI-based progression suggestions
 
-### Non-Functional Requirements
+**Non-Functional Requirements**
 
 The system also prioritizes:
 - Friendly UI with fewer than 3 taps to start or log a workout
@@ -88,7 +80,7 @@ The system also prioritizes:
 - Reliable mobile session persistence
 - Offline-first logging support for better in-gym usability
 
-### Example Use Cases
+**Example Use Cases**
 - **Fitness novice:** wants AI to generate a plan so the gym feels less intimidating
 - **Experienced lifter:** wants accurate logs to track progression over time
 - **Busy user:** wants quick suggestions on what to lift and when
@@ -99,93 +91,47 @@ The system also prioritizes:
 
 Team10Lifts is built around a mobile frontend, a Supabase backend, and an AI suggestion layer.
 
-### Main Components
+**Main Components:**
 
-**Mobile App Frontend**
-- Built for quick workout interaction
-- Uses NativeWind for styling
-- Supports user login and workout logging
+- **Mobile App Frontend**
+  - Built for quick workout interaction
+  - Uses NativeWind for styling
+  - Supports user login and workout logging
 
-**Supabase Backend**
-- Handles authentication
-- Stores user profiles
-- Enforces Row Level Security for user data protection
+- **Supabase Backend**
+  - Handles authentication
+  - Stores user profiles
+  - Enforces Row Level Security for user data protection
 
-**AI Suggestion Layer**
-- Powered through an Edge Function
-- Uses workout history to generate progression recommendation
-- Secures API secrets using the Supabase secret vault
+- **AI Suggestion Layer**
+  - Powered through an Edge Function
+  - Uses workout history to generate progression recommendation
+  - Secures API secrets using the Supabase secret vault
 
-### Current Database Tables
-- `profiles`
-- `exercises`
-- `workouts`
-- `set_logs`
-
----
-
-### Security and Data Protection
-
-Security is a core part of the system design.
-
-### Row Level Security (RLS)
-
-RLS has been enabled on:
-- `profiles`
-- `workouts`
-- `set_logs`
-- `exercises`
-
-### Exercise Access Model
-
-The `exercises` table supports both shared and private data:
-- **Global exercises:** readable by all users when `user_id is null`
-- **Private exercises** only readable and writeable by the creator when `auth.uid() = user_id`
-
-This structure allows the app to offer shared exercise templates while also supporting personal custom exercises.
-
-### Automatic Onboarding
-
-A `handle_new_user()` database function and trigger automatically create the necessary profile data when a new user signs up.
+- **Current Database Tables**
+  - `profiles`
+  - `exercises`
+  - `workouts`
+  - `set_logs`
 
 ---
 
-### AI Infrastructure
+### How to Run
 
-Team10Lifts includes an AI layer designed to support progression and programming.
+1. Clone the project
+- `git clone <your-repo-url>`
+- `cd Team10Lifts`
 
-### Current AI Setup
-- Edge Function created: `suggest-progression`
-- Local project linked to Supabase cloud project
-- `AI_API_KEY` stored securely using the Supabase CLI secret vault
+2. Install dependencies
+- `npm install`
 
-### Planned AI Behavior
+3. Add enviornment variables: Create a `.env` file and include:
+- `EXPO_PUBLIC_SUPABASE_URL=your_supabase_url`
+- `EXPO_PUBLIC-SUPABASE_PUBLISHABLE_KEY=your_publishable_key`
 
-The AI system is intended to:
-- Analyze recent workout history
-- Review the user's past 3 weeks of logs
-- Help users make better training decisions without overthinking
+4. Start the developement server
+- `npx expo start`
 
----
-
-### Current Implementation Status
-
-**Backend Foundation**
-- Created core database schema for users, workouts, exercises, and set logs
-- Added automatic onboarding through a database trigger
-- Configured supabase project linking
-
-**Security**
-- Enabled RLS across core tables
-- Refined exercise access policies for global and private records
-- Fixed overlappting policy issues by separating permissions cleanly
-
-**Frontend Connection**
-- Created `lib/supabase.ts`
-- Configured the 2026 publishable key format
-- Added `AsyncStorage` support for persistent login sessions
-- Built a basic auth login screen for testing account creation
-
-**AI Setup**
-- Created the `suggest-progression` Edge Function
-- Stored AI secrets securely in Supabase
+5. Run Supabase functions locally (optional): If needed for backend development:
+- `supabase start`
+- `supabase functions serve`
