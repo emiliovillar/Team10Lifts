@@ -1,70 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import { Text, FlatList, Button } from 'react-native';
-import { supabase } from './lib/supabase';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
-type Todo = {
-  id: number;
-  name: string;
-};
+import Team10Programs from './screens/Team10Programs';
+import Team10Recipes from './screens/Team10Recipes';
+import ViewProfile from './screens/ViewProfile';
+import LogOut from './screens/LogOut';
+import LogIn from './screens/LogIn';
+import SignUp from './screens/SignUp';
+import HomeScreen from './screens/HomeScreen';
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    const getTodos = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('todos')
-          .select('id, name');
-        
-        if (error) {
-          console.error('Error fetching todos: ', error.message);
-          return;
-        }
-
-        setTodos(data ?? []);
-      } catch (error) {
-        const message = error instanceof Error ? error.message : 'Unknown error';
-
-        console.error('Error fetching todos: ', message);
-      }
-    };
-
-    getTodos();
-  }, []);
-
   return (
-    <LinearGradient
-      colors={['#5D00FF', '#1f0055', '#000000']}
-      start={{x:0, y:0}}
-      end={{x:1, y:1}}
-      style={{ 
-        flex: 1, 
-        justifyContent: 'center', 
-        alignItems: 'center',
-        paddingTop: 60,
-      }}>
-
-      <Text style={{color:'white', fontSize: 24, marginBottom: 20}}>
-        Todo List
-      </Text>
-
-      <Button
-        onPress={() => setCount(count + 1)}
-        title="Click me!"
-      />
-
-      <FlatList<Todo>
-        data={todos}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({item}) => (
-          <Text style={{color:'white', fontSize: 18, marginBottom: 10}}>
-            {item.name}
-          </Text>
-        )}
-      />
-    </LinearGradient>
+    <NavigationContainer>
+      <Drawer.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#000000',
+          },
+          headerTintColor: '#ffffff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          drawerStyle: {
+            backgroundColor: '#111111',
+          },
+          drawerActiveTintColor: '#5D00FF',
+          drawerInactiveTintColor: '#ffffff',
+          drawerLabelStyle: {
+            fontSize: 16,
+          },
+        }}
+      >
+        <Drawer.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Home' }}
+        />
+        <Drawer.Screen
+          name="Programs"
+          component={Team10Programs}
+          options={{ title: 'Programs' }}
+        />
+        <Drawer.Screen
+          name="Recipes"
+          component={Team10Recipes}
+          options={{ title: 'Recipes' }}
+        />
+        <Drawer.Screen
+          name="Profile"
+          component={ViewProfile}
+          options={{ title: 'Profile' }}
+        />
+        <Drawer.Screen
+          name="Log In"
+          component={LogIn}
+        />
+        <Drawer.Screen
+          name="Sign Up"
+          component={SignUp}
+        />
+        <Drawer.Screen
+          name="Log Out"
+          component={LogOut}
+        />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
