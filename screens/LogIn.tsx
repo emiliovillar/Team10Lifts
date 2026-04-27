@@ -1,10 +1,49 @@
 import React, { useState } from 'react';
-import { Text, TextInput, Button } from 'react-native';
+import { Text, TextInput, Button, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { supabase } from '../lib/supabase';
 
-export default function LogIn() {
+export default function LogIn({ navigation }: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  async function handleLogIn() {
+    setMessage('');
+
+    if (!email.trim() || !password.trim()) {
+      setMessage('Please enter your email and password.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+
+      if (error) {
+        setMessage(error.message);
+        return;
+      }
+
+      if (!data.session) {
+        setMessage('Login failed. No session was created.');
+        return;
+      }
+
+      setMessage('Logged in successfully!');
+      navigation.navigate('Home');
+    } catch (err: any) {
+      setMessage(err.message || 'Something went wrong while logging in.');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <LinearGradient
@@ -27,6 +66,8 @@ export default function LogIn() {
         placeholderTextColor="gray"
         value={email}
         onChangeText={setEmail}
+        autoCapitalize="none"
+        keyboardType="email-address"
         style={{
           width: '100%',
           backgroundColor: 'white',
@@ -51,7 +92,23 @@ export default function LogIn() {
         }}
       />
 
-      <Button title="Log In" onPress={() => console.log('Logging in...')} />
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <Button title="Log In" onPress={handleLogIn} />
+      )}
+
+      {message ? (
+        <Text
+          style={{
+            color: 'white',
+            marginTop: 20,
+            textAlign: 'center',
+          }}
+        >
+          {message}
+        </Text>
+      ) : null}
     </LinearGradient>
   );
 }

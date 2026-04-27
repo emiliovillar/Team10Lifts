@@ -10,6 +10,7 @@ import LogOut from './screens/LogOut';
 import LogIn from './screens/LogIn';
 import SignUp from './screens/SignUp';
 import HomeScreen from './screens/HomeScreen';
+import Team10Workouts from './screens/Team10Workouts';
 
 const Drawer = createDrawerNavigator();
 
@@ -42,14 +43,19 @@ export default function App() {
           options={{ title: 'Home' }}
         />
         <Drawer.Screen
+          name="My Workouts"
+          component={Team10Workouts}
+          options={{ title: 'My Workouts' }}
+        />
+        <Drawer.Screen
           name="Programs"
           component={Team10Programs}
           options={{ title: 'Programs' }}
         />
         <Drawer.Screen
-          name="Recipes"
+          name="My Meals"
           component={Team10Recipes}
-          options={{ title: 'Recipes' }}
+          options={{ title: 'My Meals' }}
         />
         <Drawer.Screen
           name="Profile"
