@@ -31,13 +31,12 @@ export default function LogIn({ navigation }: any) {
         return;
       }
 
-      if (!data.session) {
-        setMessage('Login failed. No session was created.');
-        return;
-      }
-
       setMessage('Logged in successfully!');
-      navigation.navigate('Home');
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home' }],
+      });
     } catch (err: any) {
       setMessage(err.message || 'Something went wrong while logging in.');
     } finally {

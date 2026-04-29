@@ -4,7 +4,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { supabase } from '../lib/supabase';
 
 export default function SignUp({ navigation }: any ) {
-  const [ name, setName ] = useState(' ');
   const [ email, setEmail ] = useState(' ');
   const [ password, setPassword ] = useState(' ');
 
@@ -14,8 +13,8 @@ export default function SignUp({ navigation }: any ) {
   async function handleSignUp() {
     setMessage('');
 
-    if ( !name.trim() || !email.trim() || !password.trim() ) {
-      setMessage('Please enter your name, email, and password.');
+    if (!email.trim() || !password.trim()) {
+      setMessage('Please enter your email and password.');
       return;
     }
 
@@ -25,11 +24,6 @@ export default function SignUp({ navigation }: any ) {
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password,
-        options: {
-          data: {
-            name: name.trim(),
-          },
-        },
       });
 
       if (error) {
@@ -42,30 +36,26 @@ export default function SignUp({ navigation }: any ) {
         return;
       }
 
-      const { error: profileError } = await supabase.from('profiles').upsert({
-        id: data.user.id,
-        name: name.trim(),
-        email: email.trim(),
-      });
-
-      if (profileError) {
-        setMessage(`Account created, but profile failed: ${profileError.message}`);
+      if (!data.session) {
+        setMessage('Account created! Please log in.');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Log In' }],
+        });
         return;
       }
 
-      setMessage('Account created successfully!');
+      setMessage('Account created and logged in!');
 
-      navigation.navigate('Home');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home' }],
+      });
     } catch (err: any) {
       setMessage(err.message || 'Something went wrong while creating the account.');
     } finally {
       setLoading(false);
     }
-
-    console.log(
-      'URL from app:',
-      JSON.stringify(process.env.EXPO_PUBLIC_SUPABASE_URL)
-    );
   }
 
   return (
@@ -84,20 +74,6 @@ export default function SignUp({ navigation }: any ) {
       <Text style={{ color: 'white', fontSize: 24, marginBottom: 20 }}>
         Sign Up
       </Text>
-
-      <TextInput
-        placeholder="Name"
-        placeholderTextColor="gray"
-        value={name}
-        onChangeText={setName}
-        style={{
-          width: '100%',
-          backgroundColor: 'white',
-          padding: 12,
-          borderRadius: 8,
-          marginBottom: 12,
-        }}
-      />
 
       <TextInput
         placeholder="Email"
