@@ -140,15 +140,15 @@ export default function App() {
         ) : (
           <>
             <Drawer.Screen
-              name="Log In"
-              component={LogIn}
-              options={{ title: 'Log In' }}
-            />
-
-            <Drawer.Screen
               name="Sign Up"
               component={SignUp}
               options={{ title: 'Sign Up' }}
+            />
+
+            <Drawer.Screen
+              name="Log In"
+              component={LogIn}
+              options={{ title: 'Log In' }}
             />
           </>
         )}
