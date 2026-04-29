@@ -1,23 +1,77 @@
-import React from 'react';
-import { Text } from 'react-native';
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import type { Session } from '@supabase/supabase-js';
 
+import { supabase } from './lib/supabase';
+
+import HomeScreen from './screens/HomeScreen';
 import Team10Programs from './screens/Team10Programs';
 import Team10Recipes from './screens/Team10Recipes';
+import Team10Workouts from './screens/Team10Workouts';
+import Team10Meals from './screens/Team10Meals';
 import ViewProfile from './screens/ViewProfile';
 import LogOut from './screens/LogOut';
 import LogIn from './screens/LogIn';
 import SignUp from './screens/SignUp';
-import HomeScreen from './screens/HomeScreen';
-import Team10Workouts from './screens/Team10Workouts';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (isMounted) {
+          setSession(data.session);
+        }
+      })
+      .finally(() => {
+        if (isMounted) {
+          setLoading(false);
+        }
+      });
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (_event, newSession) => {
+        setSession(newSession);
+      }
+    );
+
+    return () => {
+      isMounted = false;
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#000000',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  const isLoggedIn = session !== null;
+
   return (
     <NavigationContainer>
       <Drawer.Navigator
+        key={isLoggedIn ? 'logged-in' : 'logged-out'}
         initialRouteName="Home"
         screenOptions={{
           headerStyle: {
@@ -37,43 +91,67 @@ export default function App() {
           },
         }}
       >
+        {/* Pages everyone can see */}
         <Drawer.Screen
           name="Home"
           component={HomeScreen}
           options={{ title: 'Home' }}
         />
-        <Drawer.Screen
-          name="My Workouts"
-          component={Team10Workouts}
-          options={{ title: 'My Workouts' }}
-        />
+
         <Drawer.Screen
           name="Programs"
           component={Team10Programs}
           options={{ title: 'Programs' }}
         />
+
         <Drawer.Screen
-          name="My Meals"
+          name="Recipes"
           component={Team10Recipes}
-          options={{ title: 'My Meals' }}
+          options={{ title: 'Recipes' }}
         />
-        <Drawer.Screen
-          name="Profile"
-          component={ViewProfile}
-          options={{ title: 'Profile' }}
-        />
-        <Drawer.Screen
-          name="Log In"
-          component={LogIn}
-        />
-        <Drawer.Screen
-          name="Sign Up"
-          component={SignUp}
-        />
-        <Drawer.Screen
-          name="Log Out"
-          component={LogOut}
-        />
+
+        {/* Pages only logged-in users can see */}
+        {isLoggedIn ? (
+          <>
+            <Drawer.Screen
+              name="My Workouts"
+              component={Team10Workouts}
+              options={{ title: 'My Workouts' }}
+            />
+
+            <Drawer.Screen
+              name="My Meals"
+              component={Team10Meals}
+              options={{ title: 'My Meals' }}
+            />
+
+            <Drawer.Screen
+              name="View Profile"
+              component={ViewProfile}
+              options={{ title: 'View Profile' }}
+            />
+
+            <Drawer.Screen
+              name="Log Out"
+              component={LogOut}
+              options={{ title: 'Log Out' }}
+            />
+          </>
+        ) : (
+          <>
+            <Drawer.Screen
+              name="Log In"
+              component={LogIn}
+              options={{ title: 'Log In' }}
+            />
+
+            <Drawer.Screen
+              name="Sign Up"
+              component={SignUp}
+              options={{ title: 'Sign Up' }}
+            />
+          </>
+        )}
       </Drawer.Navigator>
     </NavigationContainer>
   );

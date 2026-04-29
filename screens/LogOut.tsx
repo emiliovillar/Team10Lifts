@@ -1,8 +1,26 @@
-import React from 'react';
-import { Text, Button } from 'react-native';
+import React, { useState } from 'react';
+import { Text, Button, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { supabase } from '../lib/supabase';
 
-export default function LogOut() {
+export default function LogOut({ navigation }: any) {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  async function handleLogOut() {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.log(error.message);
+      return;
+    }
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
+  }
+
   return (
     <LinearGradient
       colors={['#5D00FF', '#1f0055', '#000000']}
@@ -12,18 +30,35 @@ export default function LogOut() {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: 60,
+        paddingHorizontal: 20,
       }}
     >
       <Text style={{ color: 'white', fontSize: 24, marginBottom: 20 }}>
         Log Out
       </Text>
 
-      <Text style={{ color: 'white', fontSize: 18, marginBottom: 20 }}>
+      <Text
+        style={{
+          color: 'white',
+          fontSize: 18,
+          marginBottom: 20,
+          textAlign: 'center',
+        }}
+      >
         Are you sure you want to log out?
       </Text>
 
-      <Button title="Log Out" onPress={() => console.log('User logged out')} />
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <Button title="Log Out" onPress={handleLogOut} />
+      )}
+
+      {message ? (
+        <Text style={{ color: 'white', marginTop: 20, textAlign: 'center' }}>
+          {message}
+        </Text>
+      ) : null}
     </LinearGradient>
   );
 }
