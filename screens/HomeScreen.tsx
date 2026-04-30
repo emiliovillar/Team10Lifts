@@ -44,7 +44,7 @@ export default function HomeScreen({ navigation }: any) {
 
   return (
     <LinearGradient
-      colors={['#5D00FF', '#1f0055', '#000000']}
+      colors={['#FFFFFF', '#FFFFFF']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={styles.container}
@@ -111,7 +111,7 @@ export default function HomeScreen({ navigation }: any) {
           onChangeText={onChangeNumber}
           value={number}
           placeholder="Ask Jake..."
-          placeholderTextColor="white"
+          placeholderTextColor="#5D00FF"
           keyboardType="default"
         />
       </ScrollView>
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   title: {
-    color: 'white',
+    color: '#000000',
     fontFamily: 'Impact',
     letterSpacing: 3,
     fontSize: 80,
@@ -136,15 +136,14 @@ const styles = StyleSheet.create({
     marginTop: 150,
   },
   subtitle: {
-    color: 'white',
-    fontSize: 20,
+    color: '#5D00FF',
+    fontSize: 18,
     fontWeight: 700,
-    marginTop: 20,
     marginBottom: 150,
     textAlign: 'center'
   },
   sectionTitle: {
-    color: 'white',
+    color: '#5D00FF',
     fontSize: 24,
     fontWeight: '700',
     marginTop: 30,
@@ -192,12 +191,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   input: {
-    color: 'white',
+    color: '#5D00FF',
     fontSize: 12,
+    fontWeight: 700,
     height: 40,
     marginTop: 12,
-    borderWidth: 1,
-    borderColor: 'white',
+    borderWidth: 2,
+    borderColor: '#5D00FF',
     borderRadius: 20,
     padding: 10,
   },

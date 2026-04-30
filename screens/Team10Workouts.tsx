@@ -116,7 +116,7 @@ export default function Team10Workouts() {
 
   return (
     <LinearGradient
-      colors={['#5D00FF', '#1f0055', '#000000']}
+      colors={['#FFFFFF', '#FFFFFF']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={{ flex: 1 }}
@@ -129,7 +129,7 @@ export default function Team10Workouts() {
       >
         <Text
           style={{
-            color: 'white',
+            color: '#5D00FF',
             fontSize: 28,
             fontWeight: '700',
             marginBottom: 8,
@@ -141,7 +141,7 @@ export default function Team10Workouts() {
 
         <Text
           style={{
-            color: 'white',
+            color: '#5D00FF',
             fontSize: 16,
             marginBottom: 24,
             textAlign: 'center',
@@ -154,7 +154,7 @@ export default function Team10Workouts() {
           <View
             key={workout.id}
             style={{
-              backgroundColor: 'white',
+              backgroundColor: '#5D00FF',
               borderRadius: 12,
               padding: 16,
               marginBottom: 16,
@@ -194,7 +194,7 @@ export default function Team10Workouts() {
 
         <View
           style={{
-            backgroundColor: 'white',
+            backgroundColor: '#5D00FF',
             borderRadius: 12,
             padding: 16,
             marginTop: 10,

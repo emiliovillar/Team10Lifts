@@ -23,7 +23,7 @@ export default function LogOut({ navigation }: any) {
 
   return (
     <LinearGradient
-      colors={['#5D00FF', '#1f0055', '#000000']}
+      colors={['#FFFFFF', '#FFFFFF']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={{
@@ -33,13 +33,13 @@ export default function LogOut({ navigation }: any) {
         paddingHorizontal: 20,
       }}
     >
-      <Text style={{ color: 'white', fontSize: 24, marginBottom: 20 }}>
+      <Text style={{ color: '#5D00FF', fontSize: 24, marginBottom: 20 }}>
         Log Out
       </Text>
 
       <Text
         style={{
-          color: 'white',
+          color: '#5D00FF',
           fontSize: 18,
           marginBottom: 20,
           textAlign: 'center',
@@ -55,7 +55,7 @@ export default function LogOut({ navigation }: any) {
       )}
 
       {message ? (
-        <Text style={{ color: 'white', marginTop: 20, textAlign: 'center' }}>
+        <Text style={{ color: '#5D00FF', marginTop: 20, textAlign: 'center' }}>
           {message}
         </Text>
       ) : null}

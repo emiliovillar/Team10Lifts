@@ -60,7 +60,7 @@ export default function SignUp({ navigation }: any ) {
 
   return (
     <LinearGradient
-      colors={['#5D00FF', '#1f0055', '#000000']}
+      colors={['#FFFFFF', '#FFFFFF']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={{
@@ -71,7 +71,7 @@ export default function SignUp({ navigation }: any ) {
       }}
     >
       
-      <Text style={{ color: 'white', fontSize: 24, marginBottom: 20 }}>
+      <Text style={{ color: '#5D00FF', fontSize: 24, marginBottom: 20 }}>
         Sign Up
       </Text>
 
@@ -99,7 +99,7 @@ export default function SignUp({ navigation }: any ) {
         secureTextEntry
         style={{
           width: '100%',
-          backgroundColor: 'white',
+          backgroundColor: '#5D00FF',
           padding: 12,
           borderRadius: 8,
           marginBottom: 20,
@@ -115,7 +115,7 @@ export default function SignUp({ navigation }: any ) {
       { message ? (
         <Text
           style={{
-            color: 'white',
+            color: '#5D00FF',
             marginTop: 20,
             textAlign: 'center',
           }}

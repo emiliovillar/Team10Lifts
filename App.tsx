@@ -58,10 +58,10 @@ export default function App() {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#000000',
+          backgroundColor: '#FFFFFF',
         }}
       >
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color="#5D00FF" />
       </View>
     );
   }
@@ -75,17 +75,17 @@ export default function App() {
         initialRouteName="Home"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#000000',
+            backgroundColor: '#5D00FF',
           },
-          headerTintColor: '#ffffff',
+          headerTintColor: 'white',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
           drawerStyle: {
-            backgroundColor: '#111111',
+            backgroundColor: '#FFFFFF',
           },
           drawerActiveTintColor: '#5D00FF',
-          drawerInactiveTintColor: '#ffffff',
+          drawerInactiveTintColor: '#5D00FF',
           drawerLabelStyle: {
             fontSize: 16,
           },
