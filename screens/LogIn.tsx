@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Text, TextInput, Button, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  TextInput,
+  ActivityIndicator,
+  View,
+  StyleSheet,
+} from 'react-native';
+import { Button } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { supabase } from '../lib/supabase';
 
@@ -21,7 +28,7 @@ export default function LogIn({ navigation }: any) {
     try {
       setLoading(true);
 
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email: email.trim(),
         password,
       });
@@ -49,65 +56,94 @@ export default function LogIn({ navigation }: any) {
       colors={['#FFFFFF', '#FFFFFF']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-      }}
+      style={styles.container}
     >
-      <Text style={{ color: '#5D00FF', fontSize: 24, marginBottom: 20 }}>
-        Log In
-      </Text>
+      <View style={styles.formCard}>
+        <Text style={styles.title}>Log In</Text>
 
-      <TextInput
-        placeholder="Email"
-        placeholderTextColor="gray"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        style={{
-          width: '100%',
-          backgroundColor: '#5D00FF',
-          padding: 12,
-          borderRadius: 8,
-          marginBottom: 12,
-        }}
-      />
+        <TextInput
+          placeholder="Email"
+          placeholderTextColor="gray"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          style={styles.input}
+        />
 
-      <TextInput
-        placeholder="Password"
-        placeholderTextColor="gray"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={{
-          width: '100%',
-          backgroundColor: '#5D00FF',
-          padding: 12,
-          borderRadius: 8,
-          marginBottom: 20,
-        }}
-      />
+        <TextInput
+          placeholder="Password"
+          placeholderTextColor="gray"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          style={styles.input}
+        />
 
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <Button title="Log In" onPress={handleLogIn} />
-      )}
+        {loading ? (
+          <ActivityIndicator color="#5D00FF" />
+        ) : (
+          <Button
+            mode="contained"
+            buttonColor="#5D00FF"
+            textColor="white"
+            onPress={handleLogIn}
+            style={styles.button}
+          >
+            Log In
+          </Button>
+        )}
 
-      {message ? (
-        <Text
-          style={{
-            color: '#5D00FF',
-            marginTop: 20,
-            textAlign: 'center',
-          }}
-        >
-          {message}
-        </Text>
-      ) : null}
+        {message ? <Text style={styles.message}>{message}</Text> : null}
+      </View>
     </LinearGradient>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+
+  formCard: {
+    width: '100%',
+    maxWidth: 500,
+    borderWidth: 1.5,
+    borderColor: '#000000',
+    borderRadius: 20,
+    padding: 24,
+  },
+
+  title: {
+    color: '#5D00FF',
+    fontSize: 28,
+    fontWeight: '800',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+
+  input: {
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+    padding: 12,
+    borderRadius: 50,
+    borderWidth: 1.5,
+    borderColor: '#000000',
+    marginBottom: 14,
+  },
+
+  button: {
+    borderRadius: 25,
+    marginTop: 6,
+  },
+
+  message: {
+    color: '#5D00FF',
+    marginTop: 20,
+    textAlign: 'center',
+    fontWeight: '700',
+  },
+});

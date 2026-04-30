@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  Text as RNText,
   Text,
   TextInput,
   ScrollView,
@@ -12,35 +11,66 @@ import {
 import { Button, Card, Text as PaperText } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 
+import { recipes } from './Team10Recipes';
+
 export default function HomeScreen({ navigation }: any) {
-  const [number, onChangeNumber] = React.useState('');
+  const [question, setQuestion] = React.useState('');
   const { width } = useWindowDimensions();
 
   const isDesktop = width >= 768;
 
   const programs = [
     {
-      title: 'Beginner Program',
-      subtitle: 'Start your fitness journey',
-      description: 'Simple workouts for building consistency.',
+      title: 'Beginner',
+      subtitle: 'Start your fitness journey with simple workouts.',
       image:
         'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470&auto=format&fit=crop',
     },
     {
-      title: 'Intermediate Program',
-      subtitle: 'Build strength and skill',
-      description: 'A balanced plan for steady progress.',
+      title: 'Intermediate',
+      subtitle: 'Build strength, consistency, and better habits.',
       image:
         'https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=1469&auto=format&fit=crop',
     },
     {
-      title: 'Advanced Program',
-      subtitle: 'Push your limits',
-      description: 'Harder training for experienced lifters.',
+      title: 'Advanced',
+      subtitle: 'Push your limits with harder training plans.',
       image:
         'https://images.unsplash.com/photo-1534367610401-9f5ed68180aa?q=80&w=1470&auto=format&fit=crop',
     },
   ];
+
+  const features = [
+    {
+      title: 'Track Your Workouts',
+      description: 'Log exercises, sets, reps, and progress over time.',
+    },
+    {
+      title: 'Follow Simple Programs',
+      description: 'Choose beginner, intermediate, or advanced plans.',
+    },
+    {
+      title: 'Eat With a Goal',
+      description: 'View meal ideas that support strength and recovery.',
+    },
+  ];
+
+  const stats = [
+    {
+      number: '3',
+      label: 'Training Levels',
+    },
+    {
+      number: '4+',
+      label: 'Recipe Ideas',
+    },
+    {
+      number: 'AI',
+      label: 'Fitness Support',
+    },
+  ];
+
+  const recipePreview = recipes.slice(0, 3);
 
   return (
     <LinearGradient
@@ -50,12 +80,125 @@ export default function HomeScreen({ navigation }: any) {
       style={styles.container}
     >
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <RNText style={styles.title}>Team 10 Lifts</RNText>
-        <Text style={styles.subtitle}>
-          Stay Strong, Stay Consistent, Stay Team 10
-        </Text>
+        {/* Hero Section */}
+        <View style={styles.heroSection}>
+          <Text style={styles.heroLabel}>Fitness made simple</Text>
 
-        <RNText style={styles.sectionTitle}>Programs</RNText>
+          <Text style={styles.title}>Team 10 Lifts</Text>
+
+          <Text style={styles.subtitle}>
+            Stay strong, stay consistent, and build better fitness habits with
+            workouts, recipes, and AI-powered support.
+          </Text>
+
+          <View
+            style={[
+              styles.heroButtonRow,
+              { flexDirection: isDesktop ? 'row' : 'column' },
+            ]}
+          >
+            <Button
+              mode="contained"
+              buttonColor="#5D00FF"
+              textColor="white"
+              style={styles.heroButton}
+              onPress={() => navigation.navigate('Programs')}
+            >
+              View Programs
+            </Button>
+
+            <Button
+              mode="outlined"
+              textColor="#5D00FF"
+              style={styles.outlineButton}
+              onPress={() => navigation.navigate('Recipes')}
+            >
+              View Recipes
+            </Button>
+          </View>
+        </View>
+
+        {/* Stats Section */}
+        <View
+          style={[
+            styles.statsGrid,
+            { flexDirection: isDesktop ? 'row' : 'column' },
+          ]}
+        >
+          {stats.map((item, index) => (
+            <View
+              key={index}
+              style={[
+                styles.statBox,
+                { width: isDesktop ? '31%' : '100%' },
+              ]}
+            >
+              <Text style={styles.statNumber}>{item.number}</Text>
+              <Text style={styles.statLabel}>{item.label}</Text>
+            </View>
+          ))}
+        </View>
+
+        {/* About Section */}
+        <View style={styles.infoSection}>
+          <Text style={styles.sectionTitle}>What is Team 10 Lifts?</Text>
+
+          <Text style={styles.bodyText}>
+            Team 10 Lifts is a beginner-friendly fitness app designed to help
+            users stay organized with their workouts, meal ideas, and progress.
+            The goal is to make fitness feel simple, motivating, and easier to
+            follow.
+          </Text>
+        </View>
+
+        {/* Features */}
+        <Text style={styles.sectionTitle}>Why Use Team 10 Lifts?</Text>
+
+        <View
+          style={[
+            styles.cardGrid,
+            { flexDirection: isDesktop ? 'row' : 'column' },
+          ]}
+        >
+          {features.map((feature, index) => (
+            <Card
+              key={index}
+              style={[
+                styles.featureCard,
+                { width: isDesktop ? '31%' : '100%' },
+              ]}
+            >
+              <View style={styles.featureContent}>
+                <PaperText variant="titleLarge" style={styles.featureTitle}>
+                  {feature.title}
+                </PaperText>
+
+                <PaperText variant="bodyMedium" style={styles.featureText}>
+                  {feature.description}
+                </PaperText>
+              </View>
+            </Card>
+          ))}
+        </View>
+
+        {/* Weekly Challenge */}
+        <View style={styles.challengeSection}>
+          <Text style={styles.challengeTitle}>Weekly Challenge</Text>
+
+          <Text style={styles.challengeText}>
+            Complete three workouts, drink enough water, and try one high-protein
+            meal this week.
+          </Text>
+
+          <View style={styles.challengeList}>
+            <Text style={styles.challengeItem}>• Complete 3 workouts</Text>
+            <Text style={styles.challengeItem}>• Try 1 new recipe</Text>
+            <Text style={styles.challengeItem}>• Stretch after training</Text>
+          </View>
+        </View>
+
+        {/* Programs */}
+        <Text style={styles.sectionTitle}>Programs</Text>
 
         <View
           style={[
@@ -85,10 +228,6 @@ export default function HomeScreen({ navigation }: any) {
                     {program.subtitle}
                   </PaperText>
 
-                  <RNText style={styles.cardDescription}>
-                    {program.description}
-                  </RNText>
-
                   <Button
                     mode="contained"
                     buttonColor="#5D00FF"
@@ -104,16 +243,87 @@ export default function HomeScreen({ navigation }: any) {
           ))}
         </View>
 
-        <RNText style={styles.sectionTitle}>Meals</RNText>
+        {/* Recipes */}
+        <View style={styles.sectionHeaderRow}>
+          <Text style={styles.sectionTitle}>Recipes</Text>
 
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="Ask Jake..."
-          placeholderTextColor="#5D00FF"
-          keyboardType="default"
-        />
+          <Button
+            mode="text"
+            textColor="#5D00FF"
+            onPress={() => navigation.navigate('Recipes')}
+          >
+            See All
+          </Button>
+        </View>
+
+        <View
+          style={[
+            styles.cardGrid,
+            { flexDirection: isDesktop ? 'row' : 'column' },
+          ]}
+        >
+          {recipePreview.map((recipe) => (
+            <Card
+              key={recipe.id}
+              style={[
+                styles.recipeOuterCard,
+                { width: isDesktop ? '31%' : '100%' },
+              ]}
+            >
+              <View style={styles.recipeCard}>
+                <PaperText variant="titleLarge" style={styles.recipeTitle}>
+                  {recipe.name}
+                </PaperText>
+
+                <PaperText variant="bodyMedium" style={styles.recipeCategory}>
+                  {recipe.category}
+                </PaperText>
+
+                <PaperText variant="bodyMedium" style={styles.recipeDescription}>
+                  {recipe.description}
+                </PaperText>
+
+                <Button
+                  mode="contained"
+                  buttonColor="#5D00FF"
+                  textColor="white"
+                  onPress={() => navigation.navigate('Recipes')}
+                  style={styles.button}
+                >
+                  View Recipe
+                </Button>
+              </View>
+            </Card>
+          ))}
+        </View>
+
+        {/* AI Coach */}
+        <View style={styles.aiSection}>
+          <Text style={styles.aiTitle}>Ask Jake</Text>
+
+          <Text style={styles.aiText}>
+            Need workout advice, meal ideas, or help staying motivated? Ask the
+            Team 10 AI coach.
+          </Text>
+
+          <TextInput
+            style={styles.input}
+            onChangeText={setQuestion}
+            value={question}
+            placeholder="Ask Jake about workouts, meals, or fitness..."
+            placeholderTextColor="#5D00FF"
+            keyboardType="default"
+          />
+
+          <Button
+            mode="contained"
+            buttonColor="#5D00FF"
+            textColor="white"
+            style={styles.askButton}
+          >
+            Ask Jake
+          </Button>
+        </View>
       </ScrollView>
     </LinearGradient>
   );
@@ -123,82 +333,291 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
   scrollContent: {
     padding: 20,
-    paddingBottom: 40,
+    paddingBottom: 50,
   },
+
+  heroSection: {
+    alignItems: 'center',
+    paddingTop: 120,
+    paddingBottom: 80,
+  },
+
+  heroLabel: {
+    color: '#5D00FF',
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 10,
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+  },
+
   title: {
     color: '#000000',
     fontFamily: 'Impact',
     letterSpacing: 3,
-    fontSize: 80,
+    fontSize: 76,
     textAlign: 'center',
-    marginTop: 150,
+    marginBottom: 10,
   },
+
   subtitle: {
     color: '#5D00FF',
     fontSize: 18,
-    fontWeight: 700,
-    marginBottom: 150,
-    textAlign: 'center'
+    fontWeight: '700',
+    textAlign: 'center',
+    maxWidth: 700,
+    lineHeight: 28,
+    marginBottom: 25,
   },
+
+  heroButtonRow: {
+    gap: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  heroButton: {
+    borderRadius: 25,
+    minWidth: 160,
+  },
+
+  outlineButton: {
+    borderRadius: 25,
+    borderColor: '#5D00FF',
+    borderWidth: 2,
+    minWidth: 160,
+  },
+
+  statsGrid: {
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 16,
+    marginBottom: 40,
+  },
+
+  statBox: {
+    backgroundColor: '#5D00FF',
+    borderRadius: 20,
+    padding: 25,
+    alignItems: 'center',
+  },
+
+  statNumber: {
+    color: '#FFFFFF',
+    fontSize: 38,
+    fontWeight: '800',
+  },
+
+  statLabel: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '700',
+    marginTop: 6,
+  },
+
+  infoSection: {
+    backgroundColor: '#F3EEFF',
+    borderRadius: 20,
+    padding: 22,
+    marginBottom: 35,
+  },
+
   sectionTitle: {
     color: '#5D00FF',
-    fontSize: 24,
-    fontWeight: '700',
+    fontSize: 26,
+    fontWeight: '800',
     marginTop: 30,
     marginBottom: 15,
   },
+
+  bodyText: {
+    color: '#000000',
+    fontSize: 16,
+    lineHeight: 25,
+  },
+
   cardGrid: {
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     gap: 16,
   },
+
+  featureCard: {
+    borderRadius: 20,
+    backgroundColor: '#EEEEEE',
+    marginBottom: 16,
+  },
+
+  featureContent: {
+    padding: 20,
+    minHeight: 170,
+    justifyContent: 'center',
+  },
+
+  featureTitle: {
+    color: '#000000',
+    fontWeight: '800',
+    marginBottom: 10,
+  },
+
+  featureText: {
+    color: '#333333',
+    fontSize: 15,
+    lineHeight: 22,
+  },
+
+  challengeSection: {
+    backgroundColor: '#000000',
+    borderRadius: 22,
+    padding: 24,
+    marginTop: 30,
+    marginBottom: 20,
+  },
+
+  challengeTitle: {
+    color: '#FFFFFF',
+    fontSize: 26,
+    fontWeight: '800',
+    marginBottom: 10,
+  },
+
+  challengeText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 15,
+  },
+
+  challengeList: {
+    backgroundColor: '#1F1F1F',
+    borderRadius: 15,
+    padding: 15,
+  },
+
+  challengeItem: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    marginBottom: 8,
+  },
+
   card: {
     borderRadius: 20,
     overflow: 'hidden',
     marginBottom: 16,
     backgroundColor: 'transparent',
   },
+
   cardBackground: {
     minHeight: 250,
     justifyContent: 'flex-end',
   },
+
   cardImage: {
     borderRadius: 20,
   },
+
   overlay: {
     flex: 1,
     justifyContent: 'flex-end',
     padding: 18,
     backgroundColor: 'rgba(0, 0, 0, 0.45)',
   },
+
   cardTitle: {
-    color: 'white',
-    fontWeight: '700',
-    marginBottom: 4,
+    color: '#FFFFFF',
+    fontWeight: '800',
+    marginBottom: 6,
   },
+
   cardSubtitle: {
-    color: 'white',
-    marginBottom: 8,
+    color: '#FFFFFF',
+    marginBottom: 12,
+    lineHeight: 22,
   },
-  cardDescription: {
-    color: 'white',
-    fontSize: 14,
-    marginBottom: 14,
-  },
+
   button: {
     borderRadius: 20,
   },
+
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  recipeOuterCard: {
+    borderRadius: 20,
+    overflow: 'hidden',
+    marginBottom: 16,
+    backgroundColor: '#EEEEEE',
+  },
+
+  recipeCard: {
+    backgroundColor: '#EEEEEE',
+    padding: 18,
+    minHeight: 220,
+    justifyContent: 'space-between',
+  },
+
+  recipeTitle: {
+    color: '#000000',
+    fontWeight: '800',
+    marginBottom: 6,
+  },
+
+  recipeCategory: {
+    color: '#5D00FF',
+    fontWeight: '800',
+    marginBottom: 8,
+  },
+
+  recipeDescription: {
+    color: '#000000',
+    fontSize: 15,
+    marginBottom: 14,
+    lineHeight: 22,
+  },
+
+  aiSection: {
+    backgroundColor: '#F3EEFF',
+    borderRadius: 22,
+    padding: 24,
+    marginTop: 35,
+  },
+
+  aiTitle: {
+    color: '#000000',
+    fontSize: 28,
+    fontWeight: '800',
+    marginBottom: 8,
+  },
+
+  aiText: {
+    color: '#000000',
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 15,
+  },
+
   input: {
     color: '#5D00FF',
-    fontSize: 12,
-    fontWeight: 700,
-    height: 40,
-    marginTop: 12,
+    fontSize: 14,
+    fontWeight: '700',
+    minHeight: 45,
     borderWidth: 2,
     borderColor: '#5D00FF',
-    borderRadius: 20,
-    padding: 10,
+    borderRadius: 25,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    backgroundColor: '#FFFFFF',
+  },
+
+  askButton: {
+    borderRadius: 25,
+    marginTop: 12,
+    alignSelf: 'flex-start',
   },
 });
