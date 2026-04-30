@@ -46,7 +46,7 @@ export default function LogIn({ navigation }: any) {
 
   return (
     <LinearGradient
-      colors={['#5D00FF', '#1f0055', '#000000']}
+      colors={['#FFFFFF', '#FFFFFF']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={{
@@ -56,7 +56,7 @@ export default function LogIn({ navigation }: any) {
         paddingHorizontal: 20,
       }}
     >
-      <Text style={{ color: 'white', fontSize: 24, marginBottom: 20 }}>
+      <Text style={{ color: '#5D00FF', fontSize: 24, marginBottom: 20 }}>
         Log In
       </Text>
 
@@ -69,7 +69,7 @@ export default function LogIn({ navigation }: any) {
         keyboardType="email-address"
         style={{
           width: '100%',
-          backgroundColor: 'white',
+          backgroundColor: '#5D00FF',
           padding: 12,
           borderRadius: 8,
           marginBottom: 12,
@@ -84,7 +84,7 @@ export default function LogIn({ navigation }: any) {
         secureTextEntry
         style={{
           width: '100%',
-          backgroundColor: 'white',
+          backgroundColor: '#5D00FF',
           padding: 12,
           borderRadius: 8,
           marginBottom: 20,
@@ -100,7 +100,7 @@ export default function LogIn({ navigation }: any) {
       {message ? (
         <Text
           style={{
-            color: 'white',
+            color: '#5D00FF',
             marginTop: 20,
             textAlign: 'center',
           }}

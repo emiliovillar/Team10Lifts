@@ -39,7 +39,7 @@ export default function Team10Meals() {
 
   return (
     <LinearGradient
-      colors={['#5D00FF', '#1f0055', '#000000']}
+      colors={['#FFFFFF', '#FFFFFF']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={{ flex: 1 }}
@@ -52,7 +52,7 @@ export default function Team10Meals() {
       >
         <Text
           style={{
-            color: 'white',
+            color: '#5D00FF',
             fontSize: 28,
             fontWeight: '700',
             textAlign: 'center',
@@ -64,7 +64,7 @@ export default function Team10Meals() {
 
         <Text
           style={{
-            color: 'white',
+            color: '#5D00FF',
             fontSize: 16,
             textAlign: 'center',
             marginBottom: 24,
@@ -77,7 +77,7 @@ export default function Team10Meals() {
           <View
             key={meal.id}
             style={{
-              backgroundColor: 'white',
+              backgroundColor: '#5D00FF',
               borderRadius: 12,
               padding: 16,
               marginBottom: 16,

@@ -16,7 +16,7 @@ export default function Team10Programs() {
 
     return (
         <LinearGradient
-            colors={['#5D00FF', '#1f0055', '#000000']}
+            colors={['#FFFFFF', '#FFFFFF']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={{
@@ -25,7 +25,7 @@ export default function Team10Programs() {
                 paddingTop: 60,
             }}>
 
-            <Text style={{ color: 'white', fontSize: 24, marginBottom: 20 }}>
+            <Text style={{ color: '#5D00FF', fontSize: 24, marginBottom: 20 }}>
                 Team 10 Programs
             </Text>
 
@@ -33,7 +33,7 @@ export default function Team10Programs() {
                 data={programs}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <Text style={{ color: 'white', fontSize: 18, marginBottom: 12 }}>
+                    <Text style={{ color: '#5D00FF', fontSize: 18, marginBottom: 12 }}>
                         {item.name}
                     </Text>
                 )}
