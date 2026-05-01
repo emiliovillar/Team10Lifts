@@ -18,3 +18,35 @@
 ---
 
 ## Tasks
+### Emilio
+- Programs & Recipes page
+- Keep information hard coded
+- Take inspiration from other app/websites
+
+### Izzy
+- My Workouts page
+- Add workout
+- Edit workout
+- Delete workout
+- Favorite workout
+- Dropdown menu:
+    - Beginner
+    - Intermediate
+    - Advanced
+
+### Jay
+- Profile page
+- Profile picture
+- Bio
+- Name
+- Fitness Goal
+
+### Mariana
+- My Meals page
+- Add meal
+- Edit meal
+- Delete meal
+- Favorite meal
+
+### Lili
+- Final Report
